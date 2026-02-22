@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Cart Hub - Quality Products You Can Trust</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Custom Colors */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 30px;
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active::after {
+            width: 30px;
+        }
+
+        .cart-wrapper {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            height: 600px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .hero-overlay {
+            width: 100%;
+            padding: 0 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 1s ease;
+        }
+
+        .hero-subtitle {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 1s ease;
+        }
+
+        .shop-now-btn, .learn-more-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shop-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .learn-more-btn:hover {
+            background: white;
+            color: var(--primary) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg);
+        }
+
+        .feature-icon i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        /* Products Section */
+        .products-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-top: 100%;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .product-action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .product-card:hover .product-action-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .product-action-btn:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .product-action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1) !important;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+        }
+
+        .product-badge .badge {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 50px;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        .testimonial-author img {
+            border: 3px solid var(--primary);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+        }
+
+        .newsletter-form input {
+            border: none;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .newsletter-form button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--dark);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Simplified Footer */
+        .simple-footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(135deg, var(--primary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-links-simple {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links-simple li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links-simple a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links-simple a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-social-simple {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social-simple a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .footer-social-simple a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-contact-simple p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-contact-simple i {
+            color: var(--primary);
+            width: 25px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary);
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Rounded Classes */
+        .rounded-xl {
+            border-radius: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-img {
+                height: 400px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem !important;
+            }
+
+            .product-filter {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .simple-footer .row > div {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-img {
+                height: 300px;
+            }
+
+            .hero-badge {
+                font-size: 0.875rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.875rem;
+            }
+
+            .shop-now-btn, .learn-more-btn {
+                padding: 0.5rem 1.5rem !important;
+                font-size: 0.875rem;
+            }
+
+            .feature-card {
+                padding: 1rem !important;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .feature-icon i {
+                font-size: 1.5rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
+        <div class="container">
+            <!-- Logo and Website Name -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="nova cart hub.png" alt="Logo" class="logo-img me-2">
+                <span class="fw-bold text-primary brand-name">Nova Cart Hub</span>
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Menu Items -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html" data-page="home">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-page="about">
+                            <i class="fas fa-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html" data-page="products">
+                            <i class="fas fa-box me-1"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html" data-page="contact">
+                            <i class="fas fa-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Cart and Contact -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Shopping Cart -->
+                    <div class="cart-wrapper position-relative">
+                        <a href="#" class="btn btn-outline-primary rounded-pill cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            <span class="d-none d-md-inline">Cart</span>
+                            <span class="cart-count badge bg-primary rounded-pill">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Contact Number -->
+                    <div class="contact-number d-none d-lg-block">
+                        <a href="tel:+1234567890" class="btn btn-primary rounded-pill">
+                            <i class="fas fa-phone-alt me-2"></i>+1 (234) 567-890
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Banner Section -->
+        <section class="hero-section">
+            <div class="container-fluid p-0">
+                <div class="hero-image position-relative">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+                         alt="Hero Banner" class="img-fluid w-100 hero-img">
+                    
+                    <!-- Overlay Content -->
+                    <div class="hero-overlay position-absolute top-50 start-50 translate-middle text-center text-white">
+                        <div class="hero-content">
+                            <span class="hero-badge mb-3 d-inline-block px-3 py-1 rounded-pill">New Collection 2024</span>
+                            <h1 class="hero-title display-3 fw-bold mb-4">Welcome to Nova Cart Hub</h1>
+                            <p class="hero-subtitle lead mb-4">Discover Amazing Products at Great Prices – Quality You Can Trust</p>
+                            <div class="hero-buttons d-flex gap-3 justify-content-center flex-wrap">
+                                <a href="products.html" class="btn btn-primary btn-lg rounded-pill px-5 shop-now-btn">
+                                    <i class="fas fa-shopping-bag me-2"></i>Shop Now
+                                </a>
+                                <a href="about.html" class="btn btn-outline-light btn-lg rounded-pill px-5 learn-more-btn">
+                                    <i class="fas fa-arrow-right me-2"></i>Learn More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card text-center p-4 rounded-xl bg-white shadow-sm h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-shipping-fast fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Free Shipping</h5>
+                            <p class="text-muted mb-0">On orders over $50</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card text-center p-4 rounded-xl bg-white shadow-sm h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-shield-alt fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Secure Payment</h5>
+                            <p class="text-muted mb-0">100% protected</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card text-center p-4 rounded-xl bg-white shadow-sm h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-undo fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Easy Returns</h5>
+                            <p class="text-muted mb-0">30-day return policy</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card text-center p-4 rounded-xl bg-white shadow-sm h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-headset fa-2x text-primary"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">24/7 Support</h5>
+                            <p class="text-muted mb-0">Dedicated support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Website Intro Text -->
+        <section class="intro-section py-5 bg-light">
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="display-6 fw-bold text-primary mb-4">Your One-Stop Shop for Quality Products</h2>
+                        <p class="lead text-muted mb-4">At Nova Cart Hub, we bring you the best products from around the world, carefully selected for quality and value. Our commitment to excellence ensures that every purchase meets your expectations.</p>
+                        <div class="d-flex justify-content-center gap-4 flex-wrap">
+                            <span class="stat-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>10,000+ Products
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>50,000+ Customers
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>5-Star Rating
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section py-5" id="products">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="text-primary fw-semibold text-uppercase">Featured Collection</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-3">Our Featured Products</h2>
+                    <p class="text-muted lead">Handpicked products just for you</p>
+                </div>
+                
+                <!-- Product Filter Buttons -->
+                <div class="product-filter text-center mb-5">
+                    <button class="btn btn-outline-primary rounded-pill mx-1 filter-btn active" data-filter="all">All</button>
+                    <button class="btn btn-outline-primary rounded-pill mx-1 filter-btn" data-filter="electronics">Electronics</button>
+                    <button class="btn btn-outline-primary rounded-pill mx-1 filter-btn" data-filter="audio">Audio</button>
+                    <button class="btn btn-outline-primary rounded-pill mx-1 filter-btn" data-filter="accessories">Accessories</button>
+                </div>
+                
+                <div class="row g-4" id="productGrid">
+                    <!-- Sample Product Cards (Static) -->
+                    <div class="col-lg-3 col-md-6 product-item" data-category="electronics">
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Product" class="product-image">
+                                <div class="product-badge">
+                                    <span class="badge bg-danger">-20%</span>
+                                </div>
+                                <div class="product-overlay">
+                                    <button class="product-action-btn" title="Add to Cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="product-action-btn" title="Quick View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info p-3">
+                                <span class="text-muted small">Electronics</span>
+                                <h5 class="fw-bold mt-2">Premium Headphones</h5>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star-half-alt text-warning small"></i>
+                                    <span class="text-muted small">(4.5)</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="h5 fw-bold text-primary mb-0">$99.99</span>
+                                    <span class="text-muted text-decoration-line-through small">$129.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 product-item" data-category="audio">
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1546435770-a3e426bf3a6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Product" class="product-image">
+                                <div class="product-badge">
+                                    <span class="badge bg-success">New</span>
+                                </div>
+                                <div class="product-overlay">
+                                    <button class="product-action-btn" title="Add to Cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="product-action-btn" title="Quick View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info p-3">
+                                <span class="text-muted small">Audio</span>
+                                <h5 class="fw-bold mt-2">Wireless Speaker</h5>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <span class="text-muted small">(5.0)</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="h5 fw-bold text-primary mb-0">$79.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 product-item" data-category="accessories">
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Product" class="product-image">
+                                <div class="product-overlay">
+                                    <button class="product-action-btn" title="Add to Cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="product-action-btn" title="Quick View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info p-3">
+                                <span class="text-muted small">Accessories</span>
+                                <h5 class="fw-bold mt-2">Smart Watch</h5>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star-half-alt text-warning small"></i>
+                                    <span class="text-muted small">(4.8)</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="h5 fw-bold text-primary mb-0">$149.99</span>
+                                    <span class="text-muted text-decoration-line-through small">$199.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 product-item" data-category="electronics">
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Product" class="product-image">
+                                <div class="product-badge">
+                                    <span class="badge bg-warning">Sale</span>
+                                </div>
+                                <div class="product-overlay">
+                                    <button class="product-action-btn" title="Add to Cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="product-action-btn" title="Quick View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info p-3">
+                                <span class="text-muted small">Electronics</span>
+                                <h5 class="fw-bold mt-2">Laptop Pro</h5>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <i class="fas fa-star text-warning small"></i>
+                                    <span class="text-muted small">(5.0)</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="h5 fw-bold text-primary mb-0">$999.99</span>
+                                    <span class="text-muted text-decoration-line-through small">$1299.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="products.html" class="btn btn-primary btn-lg rounded-pill px-5">
+                        <i class="fas fa-eye me-2"></i>View All Products
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Offer Section -->
+        <section class="special-offer-section py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="offer-image position-relative">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Special Offer" class="img-fluid rounded-xl shadow-lg">
+                            <div class="offer-badge position-absolute top-0 start-0 m-4">
+                                <span class="badge bg-danger fs-5 px-3 py-2 rounded-pill">50% OFF</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="offer-content ps-lg-5">
+                            <span class="text-primary fw-semibold text-uppercase">Limited Time Offer</span>
+                            <h2 class="display-4 fw-bold mt-2 mb-4">Premium Smart Watch Collection</h2>
+                            <p class="text-muted lead mb-4">Experience the future on your wrist with our premium smart watch collection. Advanced features, elegant design, and unbeatable prices.</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Heart Rate Monitoring</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>GPS Tracking</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Water Resistant</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7-Day Battery Life</li>
+                            </ul>
+                            <div class="d-flex align-items-center gap-4 mb-4">
+                                <span class="h3 text-primary fw-bold mb-0">$149.99</span>
+                                <span class="text-muted text-decoration-line-through">$299.99</span>
+                            </div>
+                            <a href="products.html" class="btn btn-primary btn-lg rounded-pill px-5">
+                                <i class="fas fa-shopping-cart me-2"></i>Shop Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="text-primary fw-semibold text-uppercase">Testimonials</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-3">What Our Customers Say</h2>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="testimonial-card bg-white p-4 rounded-xl shadow-sm h-100">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"Amazing quality products and fast shipping! I've been a loyal customer for over a year now. Highly recommend Nova Cart Hub!"</p>
+                            <div class="testimonial-author d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80" 
+                                     alt="Customer" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <h6 class="fw-bold mb-0">John Smith</h6>
+                                    <small class="text-muted">Verified Buyer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card bg-white p-4 rounded-xl shadow-sm h-100">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"The customer service is exceptional! They helped me choose the perfect product and the delivery was super fast. Will definitely shop here again!"</p>
+                            <div class="testimonial-author d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80" 
+                                     alt="Customer" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <h6 class="fw-bold mb-0">Sarah Johnson</h6>
+                                    <small class="text-muted">Verified Buyer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card bg-white p-4 rounded-xl shadow-sm h-100">
+                            <div class="testimonial-rating mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"Great prices and excellent product quality. The website is easy to navigate and checkout was smooth. Very satisfied with my purchase!"</p>
+                            <div class="testimonial-author d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80" 
+                                     alt="Customer" class="rounded-circle me-3" width="50" height="50">
+                                <div>
+                                    <h6 class="fw-bold mb-0">Michael Brown</h6>
+                                    <small class="text-muted">Verified Buyer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section py-5 bg-primary text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h3 class="fw-bold mb-2">Subscribe to Our Newsletter</h3>
+                        <p class="mb-0 opacity-75">Get updates on new products and special offers directly in your inbox.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form class="newsletter-form d-flex gap-2" id="newsletterForm">
+                            <input type="email" class="form-control form-control-lg rounded-pill" placeholder="Enter your email address" required>
+                            <button type="submit" class="btn btn-light btn-lg rounded-pill px-4">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="cartModalLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div id="emptyCart" class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-4x text-muted mb-3"></i>
+                        <h5 class="text-muted">Your cart is empty</h5>
+                        <p class="text-muted">Start shopping to add items to your cart</p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="cartFooter" style="display: none;">
+                    <div class="w-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">Total:</h5>
+                            <h4 class="fw-bold text-primary mb-0" id="cartTotal">$0.00</h4>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-danger flex-grow-1" id="clearCartBtn">
+                                <i class="fas fa-trash me-2"></i>Clear Cart
+                            </button>
+                            <button type="button" class="btn btn-primary flex-grow-1" id="checkoutBtn">
+                                <i class="fas fa-credit-card me-2"></i>Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="quickViewTitle">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="quickViewContent">
+                        <!-- Quick view content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="toastMessage">Item added to cart!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simplified Footer -->
+    <footer class="simple-footer">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6">
+                    <a href="index.html" class="footer-logo d-block mb-3">
+                        <span>Nova Cart Hub</span>
+                    </a>
+                    <p class="footer-text">Your trusted source for quality products since 2024. We bring you the best products from around the world, carefully selected for quality and value.</p>
+                    <div class="footer-social-simple">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Quick Links</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Customer Service</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Contact Us</h5>
+                    <div class="footer-contact-simple">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Commerce Street, NY</p>
+                        <p><i class="fas fa-phone-alt me-2"></i> +1 (234) 567-890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@novacarthub.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div>
+                    © 2024 Nova Cart Hub. All rights reserved.
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Privacy</a>
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top btn btn-primary rounded-pill" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Scroll to Top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Product Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const productItems = document.querySelectorAll('.product-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                productItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for subscribing to our newsletter!');
+            newsletterForm.reset();
+        });
+
+        // Add to Cart functionality
+        const addToCartButtons = document.querySelectorAll('.product-action-btn:first-child');
+        const cartCount = document.querySelector('.cart-count');
+        let count = 0;
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                count++;
+                cartCount.textContent = count;
+                
+                const toast = new bootstrap.Toast(document.getElementById('toastNotification'));
+                toast.show();
+            });
+        });
+
+        // Quick View functionality
+        const quickViewButtons = document.querySelectorAll('.product-action-btn:last-child');
+        
+        quickViewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productCard = button.closest('.product-card');
+                const productTitle = productCard.querySelector('.fw-bold.mt-2').textContent;
+                const productPrice = productCard.querySelector('.text-primary').textContent;
+                const productImage = productCard.querySelector('.product-image').src;
+                
+                document.getElementById('quickViewTitle').textContent = productTitle;
+                
+                const quickViewContent = document.getElementById('quickViewContent');
+                quickViewContent.innerHTML = `
+                    <div class="col-md-6">
+                        <img src="${productImage}" alt="${productTitle}" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="fw-bold mb-3">${productTitle}</h4>
+                        <p class="text-muted mb-3">Experience premium quality with our ${productTitle}. Perfect for everyday use.</p>
+                        <h5 class="text-primary fw-bold mb-3">${productPrice}</h5>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Premium Quality</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>1 Year Warranty</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Free Shipping</li>
+                        </ul>
+                        <button class="btn btn-primary rounded-pill w-100" onclick="addToCartFromQuickView()">
+                            <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                        </button>
+                    </div>
+                `;
+                
+                const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
+                quickViewModal.show();
+            });
+        });
+
+        function addToCartFromQuickView() {
+            count++;
+            cartCount.textContent = count;
+            
+            const quickViewModal = bootstrap.Modal.getInstance(document.getElementById('quickViewModal'));
+            quickViewModal.hide();
+            
+            const toast = new bootstrap.Toast(document.getElementById('toastNotification'));
+            toast.show();
+        }
+
+        // Clear Cart functionality
+        document.getElementById('clearCartBtn')?.addEventListener('click', () => {
+            count = 0;
+            cartCount.textContent = count;
+            
+            document.getElementById('cartFooter').style.display = 'none';
+            document.getElementById('emptyCart').style.display = 'block';
+            
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            cartModal.hide();
+        });
+
+        // Checkout functionality
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            alert('Thank you for your purchase! This is a demo checkout.');
+        });
+    </script>
+</body>
+</html>

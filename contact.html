@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Nova Cart Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Custom Colors */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        /* Navigation Styles - EXACTLY same as index */
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 30px;
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active::after {
+            width: 30px;
+        }
+
+        .cart-wrapper {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Info Cards */
+        .contact-info {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-item {
+            transition: all 0.3s ease;
+            padding: 1rem;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover .icon-wrapper {
+            transform: rotateY(180deg);
+            background: var(--primary-dark) !important;
+        }
+
+        /* Business Hours */
+        .business-hours {
+            border-radius: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .business-hours:hover {
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Social Links */
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form:hover {
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1) !important;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
+        }
+
+        .form-control-lg {
+            font-size: 1rem;
+        }
+
+        .form-label {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Map Section */
+        .map-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .ratio {
+            border-radius: 20px !important;
+            border: 3px solid white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+            background: white !important;
+        }
+
+        .faq-item i {
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Simplified Footer - same as index */
+        .simple-footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(135deg, var(--primary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-links-simple {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links-simple li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links-simple a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links-simple a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-social-simple {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social-simple a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .footer-social-simple a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-contact-simple p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-contact-simple i {
+            color: var(--primary);
+            width: 25px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary);
+        }
+
+        /* Toast Notification */
+        .toast {
+            border-radius: 10px;
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-info, .contact-form, .faq-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .contact-form {
+            animation-delay: 0.2s;
+        }
+
+        .faq-item:nth-child(1) { animation-delay: 0.1s; }
+        .faq-item:nth-child(2) { animation-delay: 0.2s; }
+        .faq-item:nth-child(3) { animation-delay: 0.3s; }
+        .faq-item:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Rounded Classes */
+        .rounded-xl {
+            border-radius: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .icon-wrapper {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem !important;
+            }
+            
+            .btn-primary {
+                width: 100%;
+            }
+            
+            .simple-footer .row > div {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .icon-wrapper {
+                margin-right: 0 !important;
+                margin-bottom: 1rem;
+            }
+            
+            .business-hours .d-flex {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar - EXACTLY same as index.html -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
+        <div class="container">
+            <!-- Logo and Website Name -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="nova cart hub.png" alt="Logo" class="logo-img me-2">
+                <span class="fw-bold brand-name">Nova Cart Hub</span>
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Menu Items -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-page="home">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-page="about">
+                            <i class="fas fa-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html" data-page="products">
+                            <i class="fas fa-box me-1"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html" data-page="contact">
+                            <i class="fas fa-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Cart and Contact - EXACT same as index -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Shopping Cart -->
+                    <div class="cart-wrapper position-relative">
+                        <a href="#" class="btn btn-outline-primary rounded-pill cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            <span class="d-none d-md-inline">Cart</span>
+                            <span class="cart-count badge bg-primary rounded-pill">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Contact Number -->
+                    <div class="contact-number d-none d-lg-block">
+                        <a href="tel:+1234567890" class="btn btn-primary rounded-pill">
+                            <i class="fas fa-phone-alt me-2"></i>+1 (234) 567-890
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Page Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header bg-primary text-white py-5">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-3">Contact Us</h1>
+                <p class="lead mb-0">We'd love to hear from you. Get in touch with us!</p>
+            </div>
+        </section>
+
+        <!-- Contact Information and Form Section -->
+        <section class="contact-section py-5">
+            <div class="container">
+                <div class="row">
+                    <!-- Contact Information -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="contact-info bg-light p-4 rounded-xl h-100">
+                            <h3 class="h4 fw-bold mb-4">Get in Touch</h3>
+                            
+                            <div class="info-item d-flex align-items-center mb-4 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="icon-wrapper bg-primary text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h6 fw-bold mb-1">Phone Number</h4>
+                                    <p class="mb-1">+1 (234) 567-890</p>
+                                    <p class="text-muted small mb-0">Mon-Fri, 9am-6pm</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item d-flex align-items-center mb-4 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="icon-wrapper bg-primary text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h6 fw-bold mb-1">Email Address</h4>
+                                    <p class="mb-1">info@novacarthub.com</p>
+                                    <p class="mb-0">support@novacarthub.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item d-flex align-items-center mb-4 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="icon-wrapper bg-primary text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h6 fw-bold mb-1">Office Address</h4>
+                                    <p class="mb-1">123 Commerce Street</p>
+                                    <p class="mb-1">New York, NY 10001</p>
+                                    <p class="mb-0">United States</p>
+                                </div>
+                            </div>
+                            
+                            <div class="business-hours mt-4 p-4 bg-white rounded-xl">
+                                <h4 class="h6 fw-bold mb-3">Business Hours</h4>
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span>Monday - Friday:</span>
+                                    <span class="fw-bold text-primary">9:00 AM - 6:00 PM</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span>Saturday:</span>
+                                    <span class="fw-bold text-primary">10:00 AM - 4:00 PM</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Sunday:</span>
+                                    <span class="fw-bold text-danger">Closed</span>
+                                </div>
+                            </div>
+                            
+                            <div class="social-links mt-4">
+                                <h4 class="h6 fw-bold mb-3">Follow Us</h4>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="#" class="social-icon bg-primary text-white" title="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-icon bg-info text-white" title="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="social-icon bg-danger text-white" title="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="social-icon bg-primary text-white" title="LinkedIn">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" class="social-icon bg-success text-white" title="WhatsApp">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <div class="col-lg-8">
+                        <div class="contact-form bg-white p-4 rounded-xl shadow">
+                            <h3 class="h4 fw-bold mb-4">Send us a Message</h3>
+                            
+                            <form id="contactForm">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label for="name" class="form-label fw-bold">Your Name</label>
+                                        <input type="text" class="form-control form-control-lg" id="name" placeholder="Enter your full name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label fw-bold">Email Address</label>
+                                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label fw-bold">Phone Number (Optional)</label>
+                                        <input type="tel" class="form-control form-control-lg" id="phone" placeholder="Enter your phone number">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="subject" class="form-label fw-bold">Subject</label>
+                                        <select class="form-select form-select-lg" id="subject">
+                                            <option selected disabled>Select a subject</option>
+                                            <option>Product Inquiry</option>
+                                            <option>Order Status</option>
+                                            <option>Returns & Refunds</option>
+                                            <option>Technical Support</option>
+                                            <option>General Question</option>
+                                            <option>Partnership</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="message" class="form-label fw-bold">Message</label>
+                                        <textarea class="form-control" id="message" rows="6" placeholder="Type your message here..." required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                            <label class="form-check-label" for="termsCheck">
+                                                I agree to the <a href="#" class="text-primary text-decoration-none">Terms and Conditions</a> and <a href="#" class="text-primary text-decoration-none">Privacy Policy</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Map Section -->
+        <section class="map-section py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center fw-bold mb-4">Find Us Here</h2>
+                <div class="ratio ratio-21x9 rounded-xl overflow-hidden shadow">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1645563456789!5m2!1sen!2s" 
+                            style="border:0;" allowfullscreen="" loading="lazy" class="w-100 h-100"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section py-5">
+            <div class="container">
+                <h2 class="text-center fw-bold mb-5">Frequently Asked Questions</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="faq-item p-4 bg-light rounded-xl h-100">
+                            <h4 class="h5 fw-bold mb-3">
+                                <i class="fas fa-question-circle text-primary me-2"></i>
+                                How long does shipping take?
+                            </h4>
+                            <p class="text-muted mb-0">Standard shipping takes 3-5 business days. Express shipping is available for 1-2 business days delivery.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="faq-item p-4 bg-light rounded-xl h-100">
+                            <h4 class="h5 fw-bold mb-3">
+                                <i class="fas fa-question-circle text-primary me-2"></i>
+                                What is your return policy?
+                            </h4>
+                            <p class="text-muted mb-0">We offer a 30-day return policy for unused items in original packaging. Contact our support team to initiate a return.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="faq-item p-4 bg-light rounded-xl h-100">
+                            <h4 class="h5 fw-bold mb-3">
+                                <i class="fas fa-question-circle text-primary me-2"></i>
+                                Do you ship internationally?
+                            </h4>
+                            <p class="text-muted mb-0">Yes, we ship to over 50 countries worldwide. Shipping costs and delivery times vary by location.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="faq-item p-4 bg-light rounded-xl h-100">
+                            <h4 class="h5 fw-bold mb-3">
+                                <i class="fas fa-question-circle text-primary me-2"></i>
+                                How can I track my order?
+                            </h4>
+                            <p class="text-muted mb-0">Once your order ships, you'll receive a tracking number via email to track your package.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal - same as index -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="cartModalLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div id="emptyCart" class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-4x text-muted mb-3"></i>
+                        <h5 class="text-muted">Your cart is empty</h5>
+                        <p class="text-muted">Start shopping to add items to your cart</p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="cartFooter" style="display: none;">
+                    <div class="w-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">Total:</h5>
+                            <h4 class="fw-bold text-primary mb-0" id="cartTotal">$0.00</h4>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-danger flex-grow-1" id="clearCartBtn">
+                                <i class="fas fa-trash me-2"></i>Clear Cart
+                            </button>
+                            <button type="button" class="btn btn-primary flex-grow-1" id="checkoutBtn">
+                                <i class="fas fa-credit-card me-2"></i>Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal - same as index -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="quickViewTitle">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="quickViewContent">
+                        <!-- Quick view content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="toastMessage">Message sent successfully!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simplified Footer - same as index.html -->
+    <footer class="simple-footer">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6">
+                    <a href="index.html" class="footer-logo d-block mb-3">
+                        <span>Nova Cart Hub</span>
+                    </a>
+                    <p class="footer-text">Your trusted source for quality products since 2024. We bring you the best products from around the world, carefully selected for quality and value.</p>
+                    <div class="footer-social-simple">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Quick Links</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Customer Service</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Contact Us</h5>
+                    <div class="footer-contact-simple">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Commerce Street, NY</p>
+                        <p><i class="fas fa-phone-alt me-2"></i> +1 (234) 567-890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@novacarthub.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div>
+                    © 2024 Nova Cart Hub. All rights reserved.
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Privacy</a>
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top btn btn-primary rounded-pill" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Scroll to Top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success toast
+            const toast = new bootstrap.Toast(document.getElementById('toastNotification'));
+            toast.show();
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Cart functionality (same as index)
+        let cartCount = 0;
+        const cartCountElement = document.querySelector('.cart-count');
+        
+        // Clear cart
+        document.getElementById('clearCartBtn')?.addEventListener('click', () => {
+            cartCount = 0;
+            cartCountElement.textContent = cartCount;
+            
+            document.getElementById('cartFooter').style.display = 'none';
+            document.getElementById('emptyCart').style.display = 'block';
+            
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            cartModal.hide();
+        });
+
+        // Checkout
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            alert('Thank you for your purchase! This is a demo checkout.');
+        });
+    </script>
+</body>
+</html>

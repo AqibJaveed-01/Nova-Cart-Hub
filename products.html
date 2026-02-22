@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Nova Cart Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Custom Colors */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        /* Navigation Styles - EXACTLY same as index */
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 30px;
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active::after {
+            width: 30px;
+        }
+
+        .cart-wrapper {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px !important;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary) !important;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary) !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+
+        .search-box .input-group {
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box .form-control {
+            border: 2px solid #e2e8f0;
+            border-right: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .search-box .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: none;
+        }
+
+        .search-box .btn {
+            border: 2px solid var(--primary);
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box .btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(3px);
+        }
+
+        /* Product Cards */
+        .product-item {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .product-item:nth-child(1) { animation-delay: 0.1s; }
+        .product-item:nth-child(2) { animation-delay: 0.2s; }
+        .product-item:nth-child(3) { animation-delay: 0.3s; }
+        .product-item:nth-child(4) { animation-delay: 0.4s; }
+        .product-item:nth-child(5) { animation-delay: 0.5s; }
+        .product-item:nth-child(6) { animation-delay: 0.6s; }
+        .product-item:nth-child(7) { animation-delay: 0.7s; }
+        .product-item:nth-child(8) { animation-delay: 0.8s; }
+
+        .product-card {
+            border: none !important;
+            border-radius: 20px !important;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1) !important;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+        }
+
+        .product-badge .badge {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 1.5rem !important;
+            position: relative;
+            background: white;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .card-title {
+            color: var(--primary);
+        }
+
+        .product-rating {
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .product-rating i {
+            margin-right: 2px;
+        }
+
+        .product-rating .small {
+            color: var(--secondary);
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .product-features small {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-features small:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-features i {
+            font-size: 0.9rem;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(29, 78, 216, 0.05));
+            padding: 1rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .old-price {
+            font-size: 1rem;
+            color: var(--secondary);
+            text-decoration: line-through;
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+
+        .btn-view i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-view:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Product Modal */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body img {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body h4 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body h3 {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .modal-body ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-body ul li:last-child {
+            border-bottom: none;
+        }
+
+        .modal-body ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 1.5rem;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Simplified Footer - same as index */
+        .simple-footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(135deg, var(--primary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-links-simple {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links-simple li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links-simple a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links-simple a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-social-simple {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social-simple a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .footer-social-simple a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-contact-simple p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-contact-simple i {
+            color: var(--primary);
+            width: 25px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary);
+        }
+
+        /* Toast Notification */
+        .toast {
+            border-radius: 10px;
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Rounded Classes */
+        .rounded-xl {
+            border-radius: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .filter-section .row > div {
+                margin-bottom: 1rem;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .product-card img {
+                height: 200px;
+            }
+            
+            .simple-footer .row > div {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .current-price {
+                font-size: 1.25rem;
+            }
+            
+            .btn-view {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar - EXACTLY same as index.html, about.html, contact.html -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
+        <div class="container">
+            <!-- Logo and Website Name -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="nova cart hub.png" alt="Logo" class="logo-img me-2">
+                <span class="fw-bold brand-name">Nova Cart Hub</span>
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Menu Items -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-page="home">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-page="about">
+                            <i class="fas fa-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="products.html" data-page="products">
+                            <i class="fas fa-box me-1"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html" data-page="contact">
+                            <i class="fas fa-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Cart and Contact - EXACT same as index -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Shopping Cart -->
+                    <div class="cart-wrapper position-relative">
+                        <a href="#" class="btn btn-outline-primary rounded-pill cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            <span class="d-none d-md-inline">Cart</span>
+                            <span class="cart-count badge bg-primary rounded-pill">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Contact Number -->
+                    <div class="contact-number d-none d-lg-block">
+                        <a href="tel:+1234567890" class="btn btn-primary rounded-pill">
+                            <i class="fas fa-phone-alt me-2"></i>+1 (234) 567-890
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Page Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header bg-primary text-white">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-3">Our Products</h1>
+                <p class="lead mb-0">Discover our collection of high-quality products</p>
+            </div>
+        </section>
+
+        <!-- Products Filter Section -->
+        <section class="filter-section py-4">
+            <div class="container">
+                <div class="row justify-content-center align-items-center g-3">
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                            <button class="btn btn-outline-primary active filter-btn" data-filter="all">All Products</button>
+                            <button class="btn btn-outline-primary filter-btn" data-filter="electronics">Electronics</button>
+                            <button class="btn btn-outline-primary filter-btn" data-filter="audio">Audio</button>
+                            <button class="btn btn-outline-primary filter-btn" data-filter="accessories">Accessories</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="search-box">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="productSearch" placeholder="Search products...">
+                                <button class="btn btn-primary" type="button" id="searchBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Grid Section -->
+        <section class="products-page-section py-5">
+            <div class="container">
+                <div class="row g-4" id="productsGrid">
+                    <!-- Product Card 1 - Headphones -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="audio" data-product-name="Wireless Headphones">
+                        <div class="card product-card h-100">
+                            <div class="product-badge">
+                                <span class="badge bg-danger">-33% Sale</span>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Wireless Headphones">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Wireless Headphones</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                        <span class="ms-1 small">(4.5)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Premium sound quality with active noise cancellation and 30-hour battery life.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Active Noise Cancellation</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 30hr Battery Life</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Bluetooth 5.0</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="current-price">$99.99</span>
+                                        <span class="old-price ms-2">$149.99</span>
+                                    </div>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal1">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 - Smart Watch -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="electronics" data-product-name="Smart Watch Series 5">
+                        <div class="card product-card h-100">
+                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Smart Watch">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Smart Watch Series 5</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1 small">(5.0)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Track your fitness, receive notifications, and monitor your heart rate.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Heart Rate Monitor</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> GPS Tracking</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Water Resistant</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$199.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal2">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 - Wireless Earbuds -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="audio" data-product-name="Wireless Earbuds Pro">
+                        <div class="card product-card h-100">
+                            <div class="product-badge">
+                                <span class="badge bg-success">New</span>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Wireless Earbuds">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Wireless Earbuds Pro</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="ms-1 small">(4.0)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Compact design with crystal clear sound and active noise cancellation.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 24hr Battery (with case)</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Wireless Charging</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> IPX4 Water Resistant</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$79.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal3">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 - Smart Watch Pro -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="electronics" data-product-name="Smart Watch Pro">
+                        <div class="card product-card h-100">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Smart Watch Pro">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Smart Watch Pro</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                        <span class="ms-1 small">(4.5)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Advanced fitness tracking, built-in GPS, and ECG monitoring.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> ECG Monitor</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Fall Detection</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> LTE Connectivity</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$249.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal4">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 5 - Bluetooth Speaker -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="audio" data-product-name="Portable Bluetooth Speaker">
+                        <div class="card product-card h-100">
+                            <div class="product-badge">
+                                <span class="badge bg-warning text-dark">Best Seller</span>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Bluetooth Speaker">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Portable Speaker</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1 small">(5.0)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">360° surround sound, 20-hour battery, and waterproof design.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 360° Sound</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> IP67 Waterproof</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 20hr Battery</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$129.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal5">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 6 - Phone Stand -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="accessories" data-product-name="Phone Stand">
+                        <div class="card product-card h-100">
+                            <img src="https://images.unsplash.com/photo-1495433983666-b1c2ab5c37e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Phone Stand">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Aluminum Phone Stand</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="ms-1 small">(4.0)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Premium aluminum stand compatible with all smartphones and tablets.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Universal Compatibility</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 360° Rotation</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Foldable Design</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$29.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal6">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 7 - Laptop -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="electronics" data-product-name="Ultra Slim Laptop">
+                        <div class="card product-card h-100">
+                            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Laptop">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">Ultra Slim Laptop</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                        <span class="ms-1 small">(4.5)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Powerful laptop with 16GB RAM, 512GB SSD, and stunning 4K display.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 16GB RAM</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 512GB SSD</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 4K Display</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$999.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal7">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 8 - Tablet -->
+                    <div class="col-md-6 col-lg-4 product-item" data-category="electronics" data-product-name="10.5 Tablet Pro">
+                        <div class="card product-card h-100">
+                            <img src="https://images.unsplash.com/photo-1544244011-0cccfeb84189?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="card-img-top" alt="Tablet">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">10.5" Tablet Pro</h5>
+                                    <span class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="ms-1 small">(4.0)</span>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted">Perfect for entertainment and productivity with included stylus.</p>
+                                <div class="product-features">
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Stylus Included</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> Keyboard Support</small>
+                                    <small class="text-muted d-block"><i class="fas fa-check-circle text-success me-1"></i> 12hr Battery</small>
+                                </div>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="current-price">$449.99</span>
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#productModal8">
+                                        View Details <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Modals -->
+        <!-- Product Modal 1 - Headphones -->
+        <div class="modal fade" id="productModal1" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Wireless Headphones - Product Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded" alt="Product">
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Wireless Headphones</h4>
+                                <p class="text-muted">Premium sound quality with active noise cancellation</p>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <h3 class="text-primary fw-bold mb-0">$99.99</h3>
+                                    <span class="text-muted text-decoration-line-through">$149.99</span>
+                                </div>
+                                <h5 class="fw-bold mb-3">Features:</h5>
+                                <ul>
+                                    <li>Active Noise Cancellation</li>
+                                    <li>30-hour battery life</li>
+                                    <li>Bluetooth 5.0 connectivity</li>
+                                    <li>Built-in microphone for calls</li>
+                                    <li>Comfortable ear cushions</li>
+                                    <li>Foldable design for easy storage</li>
+                                </ul>
+                                <button class="btn-buy mt-3" onclick="addToCart('Wireless Headphones', 99.99)">
+                                    <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Modal 2 - Smart Watch -->
+        <div class="modal fade" id="productModal2" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Smart Watch Series 5 - Product Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded" alt="Product">
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Smart Watch Series 5</h4>
+                                <p class="text-muted">Track your fitness, receive notifications, and monitor your heart rate</p>
+                                <h3 class="text-primary fw-bold mb-3">$199.99</h3>
+                                <h5 class="fw-bold mb-3">Features:</h5>
+                                <ul>
+                                    <li>Heart Rate Monitor</li>
+                                    <li>GPS Tracking</li>
+                                    <li>Water Resistant</li>
+                                    <li>Sleep Tracking</li>
+                                    <li>Notifications</li>
+                                    <li>5-day battery life</li>
+                                </ul>
+                                <button class="btn-buy mt-3" onclick="addToCart('Smart Watch Series 5', 199.99)">
+                                    <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more modals for other products similarly -->
+    </main>
+
+    <!-- Cart Modal - same as index -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="cartModalLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div id="emptyCart" class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-4x text-muted mb-3"></i>
+                        <h5 class="text-muted">Your cart is empty</h5>
+                        <p class="text-muted">Start shopping to add items to your cart</p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="cartFooter" style="display: none;">
+                    <div class="w-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">Total:</h5>
+                            <h4 class="fw-bold text-primary mb-0" id="cartTotal">$0.00</h4>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-danger flex-grow-1" id="clearCartBtn">
+                                <i class="fas fa-trash me-2"></i>Clear Cart
+                            </button>
+                            <button type="button" class="btn btn-primary flex-grow-1" id="checkoutBtn">
+                                <i class="fas fa-credit-card me-2"></i>Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="toastMessage">Item added to cart!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simplified Footer - same as index.html, about.html, contact.html -->
+    <footer class="simple-footer">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6">
+                    <a href="index.html" class="footer-logo d-block mb-3">
+                        <span>Nova Cart Hub</span>
+                    </a>
+                    <p class="footer-text">Your trusted source for quality products since 2024. We bring you the best products from around the world, carefully selected for quality and value.</p>
+                    <div class="footer-social-simple">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Quick Links</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Customer Service</h5>
+                    <ul class="footer-links-simple">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 style="color: white; font-size: 1.1rem; margin-bottom: 1.5rem;">Contact Us</h5>
+                    <div class="footer-contact-simple">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Commerce Street, NY</p>
+                        <p><i class="fas fa-phone-alt me-2"></i> +1 (234) 567-890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@novacarthub.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div>
+                    © 2024 Nova Cart Hub. All rights reserved.
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Privacy</a>
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top btn btn-primary rounded-pill" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Scroll to Top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Cart functionality
+        let cartCount = 0;
+        let cartItems = [];
+        let cartTotal = 0;
+        
+        const cartCountElement = document.querySelector('.cart-count');
+        const cartItemsElement = document.getElementById('cartItems');
+        const emptyCartElement = document.getElementById('emptyCart');
+        const cartFooterElement = document.getElementById('cartFooter');
+        const cartTotalElement = document.getElementById('cartTotal');
+
+        // Function to add item to cart
+        function addToCart(productName, price) {
+            cartCount++;
+            cartCountElement.textContent = cartCount;
+            
+            cartItems.push({
+                name: productName,
+                price: price
+            });
+            
+            cartTotal += price;
+            
+            // Update cart display
+            updateCartDisplay();
+            
+            // Show toast notification
+            document.getElementById('toastMessage').textContent = `${productName} added to cart!`;
+            const toast = new bootstrap.Toast(document.getElementById('toastNotification'));
+            toast.show();
+        }
+
+        // Function to update cart display
+        function updateCartDisplay() {
+            if (cartItems.length > 0) {
+                emptyCartElement.style.display = 'none';
+                cartFooterElement.style.display = 'block';
+                
+                let itemsHtml = '';
+                cartItems.forEach((item, index) => {
+                    itemsHtml += `
+                        <div class="cart-item d-flex justify-content-between align-items-center mb-3 p-3 border-bottom">
+                            <div>
+                                <h6 class="fw-bold mb-1">${item.name}</h6>
+                                <span class="text-primary fw-bold">$${item.price.toFixed(2)}</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                cartItemsElement.innerHTML = itemsHtml;
+                cartTotalElement.textContent = `$${cartTotal.toFixed(2)}`;
+            } else {
+                emptyCartElement.style.display = 'block';
+                cartFooterElement.style.display = 'none';
+                cartItemsElement.innerHTML = '';
+            }
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(index) {
+            cartTotal -= cartItems[index].price;
+            cartItems.splice(index, 1);
+            cartCount--;
+            cartCountElement.textContent = cartCount;
+            updateCartDisplay();
+        }
+
+        // Clear cart
+        document.getElementById('clearCartBtn')?.addEventListener('click', () => {
+            cartCount = 0;
+            cartItems = [];
+            cartTotal = 0;
+            cartCountElement.textContent = cartCount;
+            updateCartDisplay();
+            
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            if (cartModal) {
+                cartModal.hide();
+            }
+        });
+
+        // Checkout
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            if (cartItems.length > 0) {
+                alert('Thank you for your purchase! This is a demo checkout.');
+                // Clear cart after checkout
+                document.getElementById('clearCartBtn').click();
+            }
+        });
+
+        // Product Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const productItems = document.querySelectorAll('.product-item');
+        const searchInput = document.getElementById('productSearch');
+        const searchBtn = document.getElementById('searchBtn');
+
+        // Filter by category
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                productItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        function searchProducts() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            productItems.forEach(item => {
+                const productName = item.getAttribute('data-product-name').toLowerCase();
+                if (productName.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        searchBtn.addEventListener('click', searchProducts);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+    </script>
+</body>
+</html>
